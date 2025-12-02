@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-countries" author="Dellya">
+        <createTable tableName="countries">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint
+                tableName="countries"
+                columnNames="code"
+                constraintName="uk_countries_code"/>
+    </changeSet>
+
+    <changeSet id="create-items" author="Dellya">
+        <createTable tableName="items">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manufacturer_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="items"
+                baseColumnNames="manufacturer_id"
+                referencedTableName="countries"
+                referencedColumnNames="id"
+                constraintName="fk_items_manufacturer"
+                onDelete="SET NULL"/>
+    </changeSet>
+
+    <changeSet id="countries-if-empty" author="Dellya">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM countries;
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="countries">
+            <column name="name" value="Kazakhstan"/>
+            <column name="code" value="KZ"/>
+        </insert>
+
+        <insert tableName="countries">
+            <column name="name" value="Japan"/>
+            <column name="code" value="JP"/>
+        </insert>
+
+        <insert tableName="countries">
+            <column name="name" value="Russia"/>
+            <column name="code" value="RU"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="items-if-empty" author="Dellya">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM items;
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="items">
+            <column name="name" value="Coal"/>
+            <column name="price" value="100"/>
+            <column name="quantity" value="500"/>
+            <column name="manufacturer_id" valueNumeric="3"/>
+        </insert>
+
+        <insert tableName="items">
+            <column name="name" value="Koumiss"/>
+            <column name="price" value="20"/>
+            <column name="quantity" value="12"/>
+            <column name="manufacturer_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="items">
+            <column name="name" value="Car"/>
+            <column name="price" value="12000"/>
+            <column name="quantity" value="3"/>
+            <column name="manufacturer_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

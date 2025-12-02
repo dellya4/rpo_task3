@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="countries-if-empty" author="Dellya">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM countries;
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="countries">
+            <column name="name" value="Kazakhstan"/>
+            <column name="code" value="KZ"/>
+        </insert>
+
+        <insert tableName="countries">
+            <column name="name" value="Japan"/>
+            <column name="code" value="JP"/>
+        </insert>
+
+        <insert tableName="countries">
+            <column name="name" value="Russia"/>
+            <column name="code" value="RU"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

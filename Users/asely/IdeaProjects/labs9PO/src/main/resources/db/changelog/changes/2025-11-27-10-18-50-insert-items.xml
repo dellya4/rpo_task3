@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="items-if-empty" author="Dellya">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM items;
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="items">
+            <column name="name" value="Coal"/>
+            <column name="price" value="100"/>
+            <column name="quantity" value="500"/>
+            <column name="manufacturer_id" valueNumeric="3"/>
+        </insert>
+
+        <insert tableName="items">
+            <column name="name" value="Koumiss"/>
+            <column name="price" value="20"/>
+            <column name="quantity" value="12"/>
+            <column name="manufacturer_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="items">
+            <column name="name" value="Car"/>
+            <column name="price" value="12000"/>
+            <column name="quantity" value="3"/>
+            <column name="manufacturer_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
