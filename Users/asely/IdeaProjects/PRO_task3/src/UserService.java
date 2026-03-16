@@ -1,3 +1,5 @@
+// Handles user registration using a database abstraction
+
 public class UserService {
 
     private Database database;

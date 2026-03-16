@@ -1,3 +1,5 @@
+// Realization abstraction for Mongo
+
 public class MongoDatabase implements Database {
     @Override
     public void saveUser(String username) {

@@ -1,3 +1,6 @@
+// Realization abstraction for MockDatabase
+// MockDatabase is database for testing
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,3 +1,6 @@
+// Realization abstraction for MySQL
+
+
 public class MySQLDatabase implements Database {
 
     @Override
